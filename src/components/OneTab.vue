@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       // 当前选中下标
       index: 0,
@@ -114,7 +114,7 @@ export default {
     };
   },
   methods: {
-    scrollTo (index, e) {
+    scrollTo(index, e) {
       if (this.move) {
         return;
       }
@@ -132,7 +132,7 @@ export default {
      * start：起始位置
      * targetDis: 目标移动的距离
      */
-    moveTo (start, targetDis) {
+    moveTo(start, targetDis) {
       let dis = 0;
       let speed = 5;
       if (targetDis < start) {
