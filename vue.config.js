@@ -1,4 +1,4 @@
-const px2rem = require("postcss-px2rem");
+const px2rem = require('postcss-px2rem');
 
 module.exports = {
   css: {
