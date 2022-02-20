@@ -4,12 +4,17 @@
       <van-icon name="search"></van-icon>
       <div>苹果特价一元一斤</div>
     </div>
+    <OneTab></OneTab>
   </div>
 </template>
 
 <script>
-export default {
+import OneTab from '@/components/OneTab.vue';
 
+export default {
+  components: {
+    OneTab,
+  },
 };
 </script>
 
@@ -21,7 +26,7 @@ export default {
     height: 33px;
     // 垂直居中
     line-height: 33px;
-    margin: 11px auto;
+    margin: 11px auto 0;
     border-radius: 10px;
     background-color: #eee;
     font-size: 14px;
