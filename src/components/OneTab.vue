@@ -117,7 +117,7 @@ export default {
     };
   },
   mounted() {
-    this.getSideList();
+    this.getSideList(this.menuList[this.index].title);
   },
   methods: {
     ...mapActions(['getSideList']),
@@ -135,7 +135,7 @@ export default {
       //   this.moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2);
       moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2, oneTab, 'scrollLeft');
       // 获取侧边栏数据(sidebar+data)
-      this.getSideList(this.menuList[index].type);
+      this.getSideList(this.menuList[index].title);
     },
     /**
      * start：起始位置
