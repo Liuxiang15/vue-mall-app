@@ -19,6 +19,7 @@ const getGoodsList = (type, page, size, sort) => request.get(URLS.getGoodsList, 
     type, page, size, sort,
   },
 });
+
 export default {
   getSideList,
   getGoodsList,

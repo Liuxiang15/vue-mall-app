@@ -5,8 +5,11 @@
       <div>苹果特价一元一斤</div>
     </div>
     <OneTab></OneTab>
-    <SideBar></SideBar>
-    <GoodsList></GoodsList>
+    <template v-if="showContent">
+      <SideBar></SideBar>
+      <GoodsList></GoodsList>
+    </template>
+    <van-loading size="2rem" vertical v-else></van-loading>
   </div>
 </template>
 
@@ -14,12 +17,22 @@
 import OneTab from '@/components/OneTab.vue';
 import SideBar from '@/components/SideBar.vue';
 import GoodsList from '@/components/GoodsList.vue';
+import { mapState } from 'vuex';
 
 export default {
   components: {
     OneTab,
     SideBar,
     GoodsList,
+  },
+  computed: {
+    ...mapState({
+      showContent: (state) => state.showContent,
+    }),
+  },
+  data() {
+    return {
+    };
   },
 };
 </script>
