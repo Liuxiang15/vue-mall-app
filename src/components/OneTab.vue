@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { moveTo } from '@/util/tool';
+
 export default {
   data() {
     return {
@@ -113,7 +116,11 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.getSideList();
+  },
   methods: {
+    ...mapActions(['getSideList']),
     scrollTo(index, e) {
       if (this.move) {
         return;
@@ -125,8 +132,10 @@ export default {
       const { oneTab } = this.$refs;
       const wrapperWidth = oneTab.offsetWidth;
       //   oneTab.scrollLeft += itemWidth / 2 + itemLeft - wrapperWidth / 2;
-      this.moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2);
+      //   this.moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2);
+      moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2, oneTab, 'scrollLeft');
       // 获取侧边栏数据(sidebar+data)
+      this.getSideList(this.menuList[index].type);
     },
     /**
      * start：起始位置
