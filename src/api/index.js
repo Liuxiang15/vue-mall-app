@@ -13,7 +13,6 @@ request.interceptors.response.use((value) => value.data);
 const getSideList = (type) => request.get(URLS.getSide, {
   params: { type },
 });
-
 export default {
   getSideList,
 };
