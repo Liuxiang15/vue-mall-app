@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 // import { moveTo } from '../util/tool';
 
 export default {
@@ -29,9 +29,14 @@ export default {
       sideBarList: (state) => state.sideBarList,
     }),
   },
+  mounted() {
+    console.log(this.$store.state.sideBarList, '--');
+    console.log(this.sideBarList, '--');
+    this.getGoodsList({ type: this.sideBarList[0], page: 1, sortType: 'all' });
+  },
   methods: {
+    ...mapActions(['getGoodsList']),
     scrollTo(i, e) {
-      console.log('scrollTo', i);
       if (this.move) {
         return;
       }
@@ -48,6 +53,8 @@ export default {
       //   sidebar.scrollTop += sonTop / 2 + sonHeight / 2 - pTop - pHeight / 2;
       //   moveTo(sidebar.scrollTop, sonTop / 2 + sonHeight / 2 - pTop - pHeight / 2,
       //   sidebar, 'scrollTop');
+      //  获取列表页数据
+      this.getGoodsList({ type: this.sideBarList[i], page: 1, sortType: 'all' });
     },
     moveScroll(start, end) {
       if (this.move) {

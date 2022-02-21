@@ -6,17 +6,20 @@
     </div>
     <OneTab></OneTab>
     <SideBar></SideBar>
+    <GoodsList></GoodsList>
   </div>
 </template>
 
 <script>
 import OneTab from '@/components/OneTab.vue';
 import SideBar from '@/components/SideBar.vue';
+import GoodsList from '@/components/GoodsList.vue';
 
 export default {
   components: {
     OneTab,
     SideBar,
+    GoodsList,
   },
 };
 </script>
