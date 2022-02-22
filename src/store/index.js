@@ -23,7 +23,7 @@ export default new Vuex.Store({
       // 数据合并
       state.goodsList = [...state.goodsList, ...list];
     },
-  
+
   },
   actions: {
     async getSideList({ commit }, type) {
