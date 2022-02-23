@@ -11,6 +11,7 @@ export default new Vuex.Store({
     size: 10,
     goodsList: [],
     showContent: false,
+    type: '',
   },
   mutations: {
     setSideList(state, data) {
@@ -23,7 +24,12 @@ export default new Vuex.Store({
       // 数据合并
       state.goodsList = [...state.goodsList, ...list];
     },
-  
+    resetGoodsList(state) {
+      state.goodsList = [];
+    },
+    setGoodsType(state, type) {
+      state.type = type;
+    },
   },
   actions: {
     async getSideList({ commit }, type) {
@@ -33,11 +39,19 @@ export default new Vuex.Store({
       commit('setShowContent', true);
       console.log(value);
     },
-    async getGoodsList({ state }, options) {
-      const { page, type, sortType } = options;
-      const { list } = await api.getGoodsList(type, page, state.size, sortType);
+    async getGoodsList({ state, commit }, options) {
+      const { page, sortType } = options;
+      // 传参可能没有type
+      const type = options.type || state.type;
+      const { list, total } = await api.getGoodsList(type, page, state.size, sortType);
       console.log(list);
-      this.commit('setGoodsList', list);
+      commit('setGoodsList', list);
+      commit('setGoodsType', type);
+      if (total > state.goodsList.length) {
+        // 可以继续加载
+        return true;
+      }
+      return false;
     },
   },
   modules: {},
