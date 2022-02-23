@@ -18,18 +18,56 @@
         价格
       </div>
     </div>
-    <div class="list-content"></div>
+    <div class="list-content">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-list
+          :loading="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <GoodsCard
+            v-for="item in goodsList"
+            :key="item"
+            :title="item.title"
+            :desc="item.desc"
+            :price="item.price"
+            :images="item.images"
+            :tags="item.tags"
+          />
+          >
+          <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
+        </van-list>
+      </van-pull-refresh>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import GoodsCard from './GoodsCard.vue';
+
 export default {
   data() {
     return {
       type: 'all',
+      isLoading: false,
+      loading: false,
+      finished: false,
     };
   },
+  components: {
+    GoodsCard,
+  },
+  computed: {
+    ...mapState({
+      goodsList: (state) => state.goodsList,
+    }),
+  },
   methods: {
+    onRefresh() {
+
+    },
     changeType(type) {
       //   this.type = type;
       //   if (type === 'price') {
@@ -48,6 +86,9 @@ export default {
         // 默认是向上的
         this.type = 'price-up';
       }
+    },
+    onLoad() {
+
     },
   },
 };
@@ -101,5 +142,13 @@ export default {
   .price-down::after {
     border-top-color: #ff1a90;
   }
+}
+.list-content {
+  width: 296px;
+  position: fixed;
+  top: 170px;
+  right: 0;
+  bottom: 50px;
+  overflow: auto;
 }
 </style>
