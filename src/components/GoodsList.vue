@@ -23,19 +23,19 @@
         <van-list
           :loading="loading"
           :finished="finished"
+          :immediate-check="false"
           finished-text="没有更多了"
           @load="onLoad"
         >
           <GoodsCard
             v-for="item in goodsList"
-            :key="item"
+            :key="item.id"
             :title="item.title"
             :desc="item.desc"
             :price="item.price"
             :images="item.images"
             :tags="item.tags"
           />
-          >
           <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
         </van-list>
       </van-pull-refresh>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import GoodsCard from './GoodsCard.vue';
 
 export default {
@@ -54,6 +54,7 @@ export default {
       isLoading: false,
       loading: false,
       finished: false,
+      page: 1,
     };
   },
   components: {
@@ -65,8 +66,17 @@ export default {
     }),
   },
   methods: {
+    ...mapMutations(['resetGoodsList']),
+    ...mapActions(['getGoodsList']),
     onRefresh() {
-
+      //   this.isLoading = true;
+      this.isloading = true;
+      this.finished = false;
+      this.page = 1;
+      this.resetGoodsList();
+      // 这里可以不传type
+      this.getGoodsList({ page: 1, sortType: this.type });
+      this.isLoading = false;
     },
     changeType(type) {
       //   this.type = type;
@@ -87,8 +97,17 @@ export default {
         this.type = 'price-up';
       }
     },
-    onLoad() {
-
+    async onLoad() {
+      this.page += 1;
+      this.loading = true;
+      const res = await this.getGoodsList({ page: this.page, sortType: this.type });
+      if (res) {
+        // 可以继续加载
+        this.loading = false;
+      } else {
+        // 不会继续加载
+        this.finished = true;
+      }
     },
   },
 };
@@ -150,5 +169,11 @@ export default {
   right: 0;
   bottom: 50px;
   overflow: auto;
+}
+.van-pull-refresh {
+  // overflow: hidden;
+  overflow: unset !important;
+  //   -webkit-user-select: none;
+  //   user-select: none;
 }
 </style>

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 // import { moveTo } from '../util/tool';
 
 export default {
@@ -32,9 +32,12 @@ export default {
   mounted() {
     console.log(this.$store.state.sideBarList, '--');
     console.log(this.sideBarList, '--');
+    // 初始化数据
+    this.resetGoodsList();
     this.getGoodsList({ type: this.sideBarList[0], page: 1, sortType: 'all' });
   },
   methods: {
+    ...mapMutations(['resetGoodsList']),
     ...mapActions(['getGoodsList']),
     scrollTo(i, e) {
       if (this.move) {
@@ -53,6 +56,8 @@ export default {
       //   sidebar.scrollTop += sonTop / 2 + sonHeight / 2 - pTop - pHeight / 2;
       //   moveTo(sidebar.scrollTop, sonTop / 2 + sonHeight / 2 - pTop - pHeight / 2,
       //   sidebar, 'scrollTop');
+      // 先清空数据
+      this.resetGoodsList();
       //  获取列表页数据
       this.getGoodsList({ type: this.sideBarList[i], page: 1, sortType: 'all' });
     },
