@@ -96,6 +96,7 @@ export default {
         // 默认是向上的
         this.type = 'price-up';
       }
+      this.onRefresh();
     },
     async onLoad() {
       this.page += 1;
