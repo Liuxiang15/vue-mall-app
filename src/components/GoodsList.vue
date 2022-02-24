@@ -35,6 +35,8 @@
             :price="item.price"
             :images="item.images"
             :tags="item.tags"
+            :num="counterMap[item.id]"
+            :id="item.id"
           />
           <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
         </van-list>
@@ -63,6 +65,7 @@ export default {
   computed: {
     ...mapState({
       goodsList: (state) => state.goodsList,
+      counterMap: (state) => state.counterMap,
     }),
   },
   methods: {
