@@ -3,6 +3,14 @@
     <router-view></router-view>
   </div>
 </template>
+<script>
+export default {
+  created() {
+    const counterMap = localStorage.getItem('goods') || {};
+    this.$store.commit('setCounterMap', counterMap);
+  },
+};
+</script>
 
 <style lang="less">
 </style>
