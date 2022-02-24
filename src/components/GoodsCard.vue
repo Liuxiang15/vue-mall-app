@@ -2,7 +2,7 @@
   <div class="card-wrapper van-hairline-bottom">
     <!-- 左边部分 -->
     <div class="card-img">
-      <img :src="images[0]" alt="" />
+      <img :src="images[0]" alt="" ref="img" />
     </div>
     <!-- 右边 -->
     <div class="card-content">
@@ -35,6 +35,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import Animate from '../tools/animate';
 
 export default {
   props: ['images', 'tags', 'title', 'price', 'desc', 'id', 'num'],
@@ -43,7 +44,33 @@ export default {
     counter(id, num) {
       console.log('enter counter', id, num);
       this.storageChange({ id, value: num });
+      if (num === -1) {
+        return;
+      }
+      // 飞入购物车，新生成一张图片
+      // 图片的位置
+      const { img: imgDom } = this.$refs;
+      const imgDomRect = imgDom.getBoundingClientRect();
+      const { top, left } = imgDomRect;
+      const { offsetWidth: imgWidth, offsetHeight: imgHeight } = imgDomRect;
+      const shopCar = document.getElementById('shop-car');
+      // 购物车的位置
+      const { left: carX, top: carY } = shopCar.getBoundingClientRect();
+      // 购物车宽高
+      const { offsetWidth: carWidth, offsetHeight: carHeight } = shopCar;
+      const endX = carX + carWidth / 2;
+      const endY = carY + carHeight / 2;
+      Animate({
+        startX: left,
+        startY: top,
+        endX,
+        endY,
+        src: this.$refs.img.src,
+        width: imgWidth,
+        height: imgHeight,
+      });
     },
+
   },
 };
 </script>
