@@ -6,7 +6,7 @@
 <script>
 export default {
   created() {
-    const counterMap = localStorage.getItem('goods') || {};
+    const counterMap = JSON.parse(localStorage.getItem('goods')) || {};
     this.$store.commit('setCounterMap', counterMap);
   },
 };
