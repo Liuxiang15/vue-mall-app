@@ -6,6 +6,10 @@ import store from './store';
 import 'lib-flexible';
 import 'vant/lib/index.css';
 
+import api from './api';
+
+Vue.prototype.$api = api;
+
 Vue.use(Vant);
 
 Vue.config.productionTip = false;
