@@ -1,7 +1,7 @@
 <template>
   <div class="search-wrapper">
     <div class="search-head">
-      <van-icon name="arrow-left" class="arr-left" />
+      <van-icon name="arrow-left" class="arr-left" @click="$router.goback()" />
       <van-search
         class="search-content"
         v-model="value"
@@ -59,16 +59,21 @@
         <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
       </van-list>
     </div>
+    <div class="my-history" v-if="likeList.length === 0 && showLikeList">
+      <MyHistory :searchList="searchList" @search="onSearch"></MyHistory>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import GoodsCard from '../components/GoodsCard.vue';
+import MyHistory from '../components/MyHistory.vue';
 
 export default {
   components: {
     GoodsCard,
+    MyHistory,
   },
   data() {
     return {
@@ -84,6 +89,7 @@ export default {
       showLikeList: true,
       total: 0,
       requestFlag: false,
+      searchList: [],
     };
   },
   computed: {
@@ -142,6 +148,25 @@ export default {
       } else {
         this.value = this.placeholder;
       }
+      // 判断之前有没有搜索过
+      const result = this.searchList.find((item) => item.value === this.value);
+
+      if (result) {
+        result.time = new Date().getTime();
+        this.searchList.sort((a, b) => b.time - a.time);
+      } else {
+        // 加入时间
+        this.searchList.unshift({
+          value: this.value,
+          time: new Date().getTime(),
+        });
+        // 数量限制
+        if (this.searchList.length >= 11) {
+          this.searchList.pop();
+        }
+      }
+
+      localStorage.setItem('searchList', JSON.stringify(this.searchList));
       // 清空
       this.likeList = [];
       this.page = 1;
@@ -228,6 +253,13 @@ export default {
     margin: 48px auto 0;
     z-index: 10;
     background-color: #fff;
+  }
+  .my-history {
+    width: 350px;
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    z-index: 1;
   }
 }
 </style>

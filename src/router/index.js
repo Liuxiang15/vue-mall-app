@@ -6,7 +6,11 @@ import Shopping from '@/views/Shopping.vue';
 import Search from '@/views/search.vue';
 
 Vue.use(VueRouter);
-
+VueRouter.prototype.back = false;
+VueRouter.prototype.goback = function () {
+  this.back = true;
+  this.go(-1);
+};
 const routes = [
   {
     path: '/home',
@@ -14,6 +18,7 @@ const routes = [
     children: [
       {
         path: 'classify',
+        name: 'classify',
         component: Classify,
       },
       {
@@ -24,6 +29,7 @@ const routes = [
   },
   {
     path: '/search',
+    name: 'search',
     component: Search,
   },
 
