@@ -10,6 +10,7 @@ export default new Vuex.Store({
     // 固定一页为10
     size: 10,
     goodsList: [],
+    // 是否展示侧边栏和商品列表
     showContent: false,
     type: '',
     counterMap: {},
@@ -17,7 +18,7 @@ export default new Vuex.Store({
   mutations: {
     storageChange(state, { id, value }) {
       if (state.counterMap[id]) {
-        if (value === -1 && state.counterMap[id] === 1) {
+        if ((value === -1 && state.counterMap[id] === 1) || value === -Infinity) {
           Vue.delete(state.counterMap, id);
         } else {
           Vue.set(state.counterMap, id, state.counterMap[id] + value);
@@ -53,14 +54,14 @@ export default new Vuex.Store({
       const value = await api.getSideList(type);
       commit('setSideList', value);
       commit('setShowContent', true);
-      console.log(value);
+      // console.log(value);
     },
     async getGoodsList({ state, commit }, options) {
       const { page, sortType } = options;
       // 传参可能没有type
       const type = options.type || state.type;
       const { list, total } = await api.getGoodsList(type, page, state.size, sortType);
-      console.log(list);
+      // console.log(list);
       commit('setGoodsList', list);
       commit('setGoodsType', type);
       if (total > state.goodsList.length) {

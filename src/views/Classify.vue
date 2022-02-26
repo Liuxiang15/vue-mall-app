@@ -40,11 +40,12 @@ export default {
     ...mapActions(['getGoodsList']),
   },
   watch: {
-    showContent() {
-      // if (this.showContent && this.sideList && this.sideList[0]) {
-      //   this.resetGoodsList();
-      //   this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
-      // }
+    showContent(newVal, oldVal) {
+      console.log('showContent changes', oldVal, newVal);
+      if (this.showContent && this.sideList && this.sideList[0]) {
+        this.resetGoodsList();
+        this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
+      }
     },
   },
 };

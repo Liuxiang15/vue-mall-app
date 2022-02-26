@@ -22,6 +22,7 @@
             name="cart-o"
             id="shop-car"
             class="shop-car"
+            @click="$router.push('/home/shopping')"
           ></van-icon>
         </template>
       </van-search>

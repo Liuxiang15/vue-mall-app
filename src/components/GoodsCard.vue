@@ -38,13 +38,16 @@ import { mapMutations } from 'vuex';
 import Animate from '../tools/animate';
 
 export default {
-  props: ['images', 'tags', 'title', 'price', 'desc', 'id', 'num'],
+  props: ['images', 'tags', 'title', 'price', 'desc', 'id', 'num', 'nofly'],
   methods: {
     ...mapMutations(['storageChange']),
     counter(id, num) {
       console.log('enter counter', id, num);
       this.storageChange({ id, value: num });
       if (num === -1) {
+        return;
+      }
+      if (this.nofly) {
         return;
       }
       // 飞入购物车，新生成一张图片
