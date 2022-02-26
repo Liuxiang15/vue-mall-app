@@ -1,7 +1,7 @@
 <template>
   <div class="search-wrapper">
     <div class="search-head">
-      <van-icon name="arrow-left" class="arr-left" />
+      <van-icon name="arrow-left" class="arr-left" @click="$router.goback()" />
       <van-search
         class="search-content"
         v-model="value"
